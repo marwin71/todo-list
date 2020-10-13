@@ -49,6 +49,7 @@
 
         this.items.push(item);
         this.saveItems();
+        this.$refs.input.setFocus();
       },
 
       itemRemove(item) {
@@ -63,7 +64,6 @@
 
       saveItems() {
         db.saveItems(this.items);
-        this.$refs.input.setFocus();
         if (this.filteredItems.length === 0) {
           this.$refs.menu.reset();
         }
