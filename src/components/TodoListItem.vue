@@ -25,45 +25,45 @@
 </template>
 
 <script>
-export default {
-  name: "TodoListItem",
-  props: {
-    item: {
-      type: Object,
-      required: true,
+  export default {
+    name: 'TodoListItem',
+    props: {
+      item: {
+        type: Object,
+        required: true
+      }
     },
-  },
 
-  methods: {
-    itemActiveChange() {
-      this.$emit("item-active-change", this.item);
-    },
-    itemRemove() {
-      this.$emit("item-remove", this.item);
-    },
-  },
-};
+    methods: {
+      itemActiveChange() {
+        this.$emit('item-active-change', this.item);
+      },
+      itemRemove() {
+        this.$emit('item-remove', this.item);
+      }
+    }
+  };
 </script>
 
 <style>
-.todo-list-item.level,
-.todo-list-item .level-left {
-  display: flex;
-}
+  .todo-list-item.level,
+  .todo-list-item .level-left {
+    display: flex;
+  }
 
-.todo-list-item .level-left + .level-right {
-  margin-top: 0;
-}
+  .todo-list-item .level-left + .level-right {
+    margin-top: 0;
+  }
 
-.todo-list-item .level-item:not(:last-child) {
-  margin-bottom: 0rem;
-  margin-right: 0.75rem;
-}
-/*
-.todo-list-item .level-right {
-  flex-basis: calc(100% - 2rem);
-}*/
-.icon {
-  cursor: pointer;
-}
+  .todo-list-item .level-item:not(:last-child) {
+    margin-bottom: 0rem;
+    margin-right: 0.75rem;
+  }
+  /*
+  .todo-list-item .level-right {
+    flex-basis: calc(100% - 2rem);
+  }*/
+  .icon {
+    cursor: pointer;
+  }
 </style>

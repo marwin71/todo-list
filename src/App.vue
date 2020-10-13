@@ -7,87 +7,85 @@
 </template>
 
 <script>
-import TodoListInput from "./components/TodoListInput.vue";
-import TodoListMenu from "./components/TodoListMenu.vue";
-import TodoList from "./components/TodoList.vue";
-import db from "./utils/database.js";
+  import TodoListInput from './components/TodoListInput.vue';
+  import TodoListMenu from './components/TodoListMenu.vue';
+  import TodoList from './components/TodoList.vue';
+  import db from './utils/database.js';
 
-export default {
-  name: "App",
-  components: {
-    TodoList,
-    TodoListMenu,
-    TodoListInput
-  },
-
-  data() {
-    return {
-      items: [],
-      filter: 'all'
-    }
-  },
-  
-  mounted() {
-    this.items = db.loadItems();
-    this.$refs.input.setFocus();
-  },
-
-  computed: {
-    filteredItems() {
-      if (this.filter === "active")
-        return this.items.filter((item) => item.active);
-
-      if (this.filter === "completed")
-        return this.items.filter((item) => !item.active);
-
-      return this.items;
+  export default {
+    name: 'App',
+    components: {
+      TodoList,
+      TodoListMenu,
+      TodoListInput
     },
-  },
-
-  methods: {
-    itemAdd(item) {
-      this.items.push(item);
-      this.saveItems();
+    data() {
+      return {
+        items: [],
+        filter: 'all'
+      };
     },
-
-    itemActiveChange(item) {
-      item.active = !item.active
-      this.saveItems();
-    },
-
-    itemRemove(item) {
-      setTimeout(() => {
-        this.items = this.items.filter((currentItem) => currentItem !== item)
-        this.saveItems();
-      }, 300);
-    },
-
-    removeCompleted() {
-      this.items = this.items.filter((currentItem) => currentItem.active);
-      this.saveItems();
-    },
-
-    saveItems(){
-      db.saveItems(this.items);
+    mounted() {
+      this.items = db.loadItems();
       this.$refs.input.setFocus();
-      if( this.filteredItems.length === 0) {
-        this.$refs.menu.reset();
+    },
+    computed: {
+      filteredItems() {
+        if (this.filter === 'active') return this.items.filter((item) => item.active);
+        if (this.filter === 'completed') return this.items.filter((item) => !item.active);
+        return this.items;
       }
     },
+    methods: {
+      itemAdd(itemTitle) {
+        let item = {
+          title: itemTitle,
+          active: true,
+          id: Date.now()
+        };
 
-    setFilter(value) {
-      this.filter = value;
+        this.items.push(item);
+        this.saveItems();
+      },
+
+      itemActiveChange(item) {
+        item.active = !item.active;
+        this.saveItems();
+      },
+
+      itemRemove(item) {
+        setTimeout(() => {
+          this.items = this.items.filter((currentItem) => currentItem !== item);
+          this.saveItems();
+        }, 300);
+      },
+
+      removeCompleted() {
+        this.items = this.items.filter((currentItem) => currentItem.active);
+        this.saveItems();
+      },
+
+      saveItems() {
+        db.saveItems(this.items);
+        this.$refs.input.setFocus();
+        if (this.filteredItems.length === 0) {
+          this.$refs.menu.reset();
+        }
+      },
+
+      setFilter(value) {
+        this.filter = value;
+      }
     }
-  },
-};
+  };
 </script>
 
 <style>
-body {
-  background-color: lightblue;
-  min-height: 100vh;
-}
-#app {
-  padding-top: 1rem;
-}
+  body {
+    background-color: lightblue;
+    min-height: 100vh;
+  }
+  #app {
+    padding-top: 1rem;
+  }
 </style>
