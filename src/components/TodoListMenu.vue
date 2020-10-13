@@ -35,19 +35,19 @@
 </script>
 
 <style>
-.todo-list-menu.level, .todo-list-menu .level-left {
+  .todo-list-menu.level,
+  .todo-list-menu .level-left {
     display: flex;
   }
-   .todo-list-menu .level-left + .level-right {
+  .todo-list-menu .level-left + .level-right {
     margin-top: 0;
   }
   .todo-list-menu .level-item:not(:last-child) {
     margin-bottom: 0rem;
     margin-right: 0.75rem;
   }
-
-
-  .active {
-    font-weight: bold;
+  .todo-list-menu .active {
+    border-bottom: 3px solid #00d1b2;
+    margin-top: 3px;
   }
 </style>

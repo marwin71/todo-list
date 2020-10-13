@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-list-item box level" :style="{'order': this.item.starred ? '0' : '1'}">
+  <div class="todo-list-item box level" :style="{ order: this.item.starred ? '0' : '1' }">
     <div class="level-left">
       <div class="level-item" @click="itemActiveChange()">
         <div v-if="item.active">

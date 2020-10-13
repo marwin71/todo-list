@@ -52,8 +52,8 @@
       },
 
       itemRemove(item) {
-          this.items = this.items.filter((currentItem) => currentItem !== item);
-          this.saveItems();
+        this.items = this.items.filter((currentItem) => currentItem !== item);
+        this.saveItems();
       },
 
       clearCompletedItems() {
@@ -85,7 +85,7 @@
     padding: 1rem 0.5rem;
   }
   .todo-list {
-     display:flex; 
-     flex-flow: column;
+    display: flex;
+    flex-flow: column;
   }
 </style>
