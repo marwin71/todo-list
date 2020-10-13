@@ -1,9 +1,9 @@
 <template>
   <div class="todo-list-menu level">
     <div class="level-left">
-      <a class="level-item has-text-light" :class="{ active: activeFilter === 'all' }" @click="filter('all')">All</a>
       <a class="level-item has-text-light" :class="{ active: activeFilter === 'active' }" @click="filter('active')">Active</a>
       <a class="level-item has-text-light" :class="{ active: activeFilter === 'completed' }" @click="filter('completed')">Completed</a>
+      <a class="level-item has-text-light" :class="{ active: activeFilter === 'all' }" @click="filter('all')">All</a>
     </div>
     <div class="level-right">
       <a class="level-item has-text-light" @click="clearCompletedItems()">Clear completed</a>
@@ -16,19 +16,19 @@
     name: 'TodoListMenu',
     data() {
       return {
-        activeFilter: 'all'
+        activeFilter: 'active'
       };
     },
     methods: {
       filter(value) {
-        this.$emit('filter-change', value);
         this.activeFilter = value;
+        this.$emit('filter-change', value);
       },
       clearCompletedItems() {
         this.$emit('clear-completed-items');
       },
       reset() {
-        this.activeFilter = 'all';
+        this.filter('active');
       }
     }
   };

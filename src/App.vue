@@ -24,12 +24,11 @@
     data() {
       return {
         items: [],
-        filter: 'all'
+        filter: 'active'
       };
     },
     mounted() {
       this.items = db.loadItems();
-      this.$refs.input.setFocus();
     },
     computed: {
       filteredItems() {
@@ -53,7 +52,7 @@
       },
 
       itemRemove(item) {
-        this.items = this.items.filter((currentItem) => currentItem !== item);
+        this.items = this.items.filter((currentItem) => currentItem.id !== item.id);
         this.saveItems();
       },
 
@@ -64,9 +63,6 @@
 
       saveItems() {
         db.saveItems(this.items);
-        if (this.filteredItems.length === 0) {
-          this.$refs.menu.reset();
-        }
       },
 
       filterChange(value) {
