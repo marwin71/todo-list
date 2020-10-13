@@ -32,7 +32,6 @@
         required: true
       }
     },
-
     methods: {
       itemActiveChange() {
         this.$emit('item-active-change', this.item);

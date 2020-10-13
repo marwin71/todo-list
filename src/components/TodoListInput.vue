@@ -16,13 +16,11 @@
 <script>
   export default {
     name: 'TodoListInput',
-
     data() {
       return {
         itemTitle: ''
       };
     },
-
     methods: {
       addItem() {
         if (this.itemTitle.trim().length < 1) return false;
