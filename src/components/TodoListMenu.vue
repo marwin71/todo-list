@@ -1,12 +1,12 @@
 <template>
   <div class="todo-list-menu level">
-    <div class="level-right">
-      <a class="level-item" :class="{ active: activeFilter === 'all' }" @click="filter('all')">All</a>
-      <a class="level-item" :class="{ active: activeFilter === 'active' }" @click="filter('active')">Active</a>
-      <a class="level-item" :class="{ active: activeFilter === 'completed' }" @click="filter('completed')">Completed</a>
+    <div class="level-left">
+      <a class="level-item has-text-light" :class="{ active: activeFilter === 'all' }" @click="filter('all')">All</a>
+      <a class="level-item has-text-light" :class="{ active: activeFilter === 'active' }" @click="filter('active')">Active</a>
+      <a class="level-item has-text-light" :class="{ active: activeFilter === 'completed' }" @click="filter('completed')">Completed</a>
     </div>
     <div class="level-right">
-      <a class="level-item" @click="removeCompletedItems()">Remove completed</a>
+      <a class="level-item has-text-light" @click="removeCompletedItems()">Remove completed</a>
     </div>
   </div>
 </template>
@@ -35,6 +35,18 @@
 </script>
 
 <style>
+.todo-list-menu.level, .todo-list-menu .level-left {
+    display: flex;
+  }
+   .todo-list-menu .level-left + .level-right {
+    margin-top: 0;
+  }
+  .todo-list-menu .level-item:not(:last-child) {
+    margin-bottom: 0rem;
+    margin-right: 0.75rem;
+  }
+
+
   .active {
     font-weight: bold;
   }

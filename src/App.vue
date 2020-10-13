@@ -1,21 +1,23 @@
 <template>
   <div id="app" class="container is-max-desktop">
     <TodoListInput @item-added="itemAdd($event)" ref="input" />
-    <TodoListMenu @filter-change="setFilter($event)" @remove-completed-items="removeCompleted()" ref="menu" />
-    <TodoList :items="filteredItems" @item-active-change="itemActiveChange($event)" @item-remove="itemRemove($event)" ref="list" />
+    <TodoListMenu @filter-change="filterChange($event)" @remove-completed-items="removeCompletedItems()" ref="menu" />
+    <div class="todo-list">
+      <TodoListItem v-for="item in filteredItems" :key="item.id" :item="item" @item-updated="saveItems()" @item-remove="itemRemove($event)" />
+    </div>
   </div>
 </template>
 
 <script>
   import TodoListInput from './components/TodoListInput.vue';
   import TodoListMenu from './components/TodoListMenu.vue';
-  import TodoList from './components/TodoList.vue';
+  import TodoListItem from './components/TodoListItem.vue';
   import db from './utils/database.js';
 
   export default {
     name: 'App',
     components: {
-      TodoList,
+      TodoListItem,
       TodoListMenu,
       TodoListInput
     },
@@ -39,28 +41,22 @@
     methods: {
       itemAdd(itemTitle) {
         let item = {
+          id: Date.now(),
           title: itemTitle,
           active: true,
-          id: Date.now()
+          starred: false
         };
 
         this.items.push(item);
         this.saveItems();
       },
 
-      itemActiveChange(item) {
-        item.active = !item.active;
-        this.saveItems();
-      },
-
       itemRemove(item) {
-        setTimeout(() => {
           this.items = this.items.filter((currentItem) => currentItem !== item);
           this.saveItems();
-        }, 300);
       },
 
-      removeCompleted() {
+      removeCompletedItems() {
         this.items = this.items.filter((currentItem) => currentItem.active);
         this.saveItems();
       },
@@ -73,7 +69,7 @@
         }
       },
 
-      setFilter(value) {
+      filterChange(value) {
         this.filter = value;
       }
     }
@@ -82,10 +78,14 @@
 
 <style>
   body {
-    background-color: lightblue;
+    background-color: #00b0b9;
     min-height: 100vh;
   }
   #app {
     padding-top: 1rem;
+  }
+  .todo-list {
+     display:flex; 
+     flex-flow: column;
   }
 </style>

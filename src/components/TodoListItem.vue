@@ -1,22 +1,25 @@
 <template>
-  <div class="todo-list-item box level">
+  <div class="todo-list-item box level" :style="{'order': this.item.starred ? '0' : '1'}">
     <div class="level-left">
-      <div class="level-item" style="line-height: 0">
-        <div v-if="item.active" @click="itemActiveChange()">
-          <span class="icon has-text-primary">
-            <i class="far fa-square fa-lg"></i>
-          </span>
+      <div class="level-item" @click="itemActiveChange()">
+        <div v-if="item.active">
+          <a class="has-text-primary">
+            <i class="far fa-lg fa-square"></i>
+          </a>
         </div>
-        <div v-if="!item.active" @click="itemActiveChange()">
-          <span class="icon has-text-primary">
-            <i class="far fa-check-square fa-lg"></i>
-          </span>
+        <div v-if="!item.active">
+          <a class="has-text-primary">
+            <i class="far fa-lg fa-check-square"></i>
+          </a>
         </div>
       </div>
       <div class="level-item">{{ item.title }}</div>
     </div>
-    <div class="level-right" @click="itemRemove()">
-      <a class="level-item has-text-danger">
+    <div class="level-right">
+      <a class="level-item" :class="item.starred ? 'has-text-warning' : 'has-text-grey-lighter'" @click="itemStarredChange()">
+        <i class="fas fa-star"></i>
+      </a>
+      <a class="level-item has-text-danger" @click="itemRemove()">
         <i class="far fa-trash-alt"></i>
       </a>
     </div>
@@ -34,7 +37,12 @@
     },
     methods: {
       itemActiveChange() {
-        this.$emit('item-active-change', this.item);
+        this.item.active = !this.item.active;
+        this.$emit('item-updated', this.item);
+      },
+      itemStarredChange() {
+        this.item.starred = !this.item.starred;
+        this.$emit('item-updated', this.item);
       },
       itemRemove() {
         this.$emit('item-remove', this.item);
@@ -44,6 +52,9 @@
 </script>
 
 <style>
+  .todo-list-item {
+    margin-bottom: 1.5rem;
+  }
   .todo-list-item.level,
   .todo-list-item .level-left {
     display: flex;
