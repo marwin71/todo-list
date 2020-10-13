@@ -1,28 +1,93 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="container is-max-desktop">
+    <TodoListInput @item-added="itemAdd($event)" ref="input" />
+    <TodoListMenu @filter-change="setFilter($event)" @remove-completed-items="removeCompleted()" ref="menu" />
+    <TodoList :items="filteredItems" @item-active-change="itemActiveChange($event)" @item-remove="itemRemove($event)" ref="list" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoListInput from "./components/TodoListInput.vue";
+import TodoListMenu from "./components/TodoListMenu.vue";
+import TodoList from "./components/TodoList.vue";
+import db from "./utils/database.js";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    TodoList,
+    TodoListMenu,
+    TodoListInput
+  },
+
+  data() {
+    return {
+      items: [],
+      filter: 'all'
+    }
+  },
+  
+  mounted() {
+    this.items = db.loadItems();
+    this.$refs.input.setFocus();
+  },
+
+  computed: {
+    filteredItems() {
+      if (this.filter === "active")
+        return this.items.filter((item) => item.active);
+
+      if (this.filter === "completed")
+        return this.items.filter((item) => !item.active);
+
+      return this.items;
+    },
+  },
+
+  methods: {
+    itemAdd(item) {
+      this.items.push(item);
+      this.saveItems();
+    },
+
+    itemActiveChange(item) {
+      item.active = !item.active
+      this.saveItems();
+    },
+
+    itemRemove(item) {
+      setTimeout(() => {
+        this.items = this.items.filter((currentItem) => currentItem !== item)
+        this.saveItems();
+      }, 300);
+    },
+
+    removeCompleted() {
+      this.items = this.items.filter((currentItem) => currentItem.active);
+      this.saveItems();
+    },
+
+    saveItems(){
+      db.saveItems(this.items);
+      this.$refs.input.setFocus();
+      if( this.filteredItems.length === 0) {
+        this.$refs.menu.reset();
+      }
+    },
+
+    setFilter(value) {
+      this.filter = value;
+    }
+  },
+};
 </script>
 
 <style>
+body {
+  background-color: lightblue;
+  min-height: 100vh;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 1rem;
 }
 </style>
