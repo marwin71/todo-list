@@ -6,7 +6,7 @@
       <a class="level-item has-text-light" :class="{ active: activeFilter === 'completed' }" @click="filter('completed')">Completed</a>
     </div>
     <div class="level-right">
-      <a class="level-item has-text-light" @click="removeCompletedItems()">Remove completed</a>
+      <a class="level-item has-text-light" @click="clearCompletedItems()">Clear completed</a>
     </div>
   </div>
 </template>
@@ -24,8 +24,8 @@
         this.$emit('filter-change', value);
         this.activeFilter = value;
       },
-      removeCompletedItems() {
-        this.$emit('remove-completed-items');
+      clearCompletedItems() {
+        this.$emit('clear-completed-items');
       },
       reset() {
         this.activeFilter = 'all';

@@ -56,7 +56,8 @@
     margin-bottom: 1.5rem;
   }
   .todo-list-item.level,
-  .todo-list-item .level-left {
+  .todo-list-item .level-left,
+  .todo-list-item .level-right {
     display: flex;
   }
 

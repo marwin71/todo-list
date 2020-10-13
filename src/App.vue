@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container is-max-desktop">
     <TodoListInput @item-added="itemAdd($event)" ref="input" />
-    <TodoListMenu @filter-change="filterChange($event)" @remove-completed-items="removeCompletedItems()" ref="menu" />
+    <TodoListMenu @filter-change="filterChange($event)" @clear-completed-items="clearCompletedItems()" ref="menu" />
     <div class="todo-list">
       <TodoListItem v-for="item in filteredItems" :key="item.id" :item="item" @item-updated="saveItems()" @item-remove="itemRemove($event)" />
     </div>
@@ -56,7 +56,7 @@
           this.saveItems();
       },
 
-      removeCompletedItems() {
+      clearCompletedItems() {
         this.items = this.items.filter((currentItem) => currentItem.active);
         this.saveItems();
       },
@@ -82,7 +82,7 @@
     min-height: 100vh;
   }
   #app {
-    padding-top: 1rem;
+    padding: 1rem 0.5rem;
   }
   .todo-list {
      display:flex; 
