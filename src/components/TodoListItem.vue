@@ -7,7 +7,6 @@
             <i class="far fa-square fa-lg"></i>
           </span>
         </div>
-
         <div v-if="!item.active" @click="itemActiveChange()">
           <span class="icon has-text-primary">
             <i class="far fa-check-square fa-lg"></i>
@@ -59,11 +58,7 @@
     margin-bottom: 0rem;
     margin-right: 0.75rem;
   }
-  /*
-  .todo-list-item .level-right {
-    flex-basis: calc(100% - 2rem);
-  }*/
-  .icon {
+  .todo-list-item .icon {
     cursor: pointer;
   }
 </style>
