@@ -9,9 +9,9 @@ const loadItems = () => {
 const saveItems = (items) => {
     if (items.length === 0) {
         localStorage.removeItem('items');
-    }else{
+    } else {
         localStorage.setItem('items', JSON.stringify(items));
     }
 }
 
-export default{loadItems, saveItems}
+export default { loadItems, saveItems }
