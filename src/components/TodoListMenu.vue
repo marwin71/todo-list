@@ -1,12 +1,12 @@
 <template>
   <div class="todo-list-menu level">
     <div class="level-left">
-      <a class="level-item has-text-light" :class="{ active: activeFilter === 'active' }" @click="filter('active')">Active</a>
-      <a class="level-item has-text-light" :class="{ active: activeFilter === 'completed' }" @click="filter('completed')">Completed</a>
-      <a class="level-item has-text-light" :class="{ active: activeFilter === 'all' }" @click="filter('all')">All</a>
+      <a class="level-item has-text-light" :class="{ active: filter === 'active' }" @click="setFilter('active')">Active</a>
+      <a class="level-item has-text-light" :class="{ active: filter === 'completed' }" @click="setFilter('completed')">Completed</a>
+      <a class="level-item has-text-light" :class="{ active: filter === 'all' }" @click="setFilter('all')">All</a>
     </div>
     <div class="level-right">
-      <a class="level-item has-text-light" @click="clearCompletedItems()">Clear completed</a>
+      <a class="level-item has-text-light" @click="deleteCompletedItems()">Clear completed</a>
     </div>
   </div>
 </template>
@@ -14,21 +14,17 @@
 <script>
   export default {
     name: 'TodoListMenu',
-    data() {
-      return {
-        activeFilter: 'active'
-      };
+    computed: {
+      filter() {
+        return this.$store.getters.getFilter;
+      }
     },
     methods: {
-      filter(value) {
-        this.activeFilter = value;
-        this.$emit('filter-change', value);
+      setFilter(value) {
+        this.$store.commit('setFilter', value);
       },
-      clearCompletedItems() {
-        this.$emit('clear-completed-items');
-      },
-      reset() {
-        this.filter('active');
+      deleteCompletedItems() {
+        this.$store.commit('deleteCompletedItems');
       }
     }
   };

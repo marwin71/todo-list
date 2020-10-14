@@ -7,7 +7,7 @@ const loadItems = () => {
 }
 
 const saveItems = (items) => {
-    if (items.length === 0) {
+    if (items.length === 0 ) {
         localStorage.removeItem('items');
     } else {
         localStorage.setItem('items', JSON.stringify(items));

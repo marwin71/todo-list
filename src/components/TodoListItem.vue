@@ -1,7 +1,7 @@
 <template>
   <div class="todo-list-item box level" :style="{ order: this.item.starred ? '0' : '1' }">
     <div class="level-left">
-      <div class="level-item" @click="itemActiveChange()">
+      <div class="level-item" @click="toggleActive()">
         <div v-if="item.active">
           <a class="has-text-primary">
             <i class="far fa-lg fa-square"></i>
@@ -16,10 +16,10 @@
       <div class="level-item">{{ item.title }}</div>
     </div>
     <div class="level-right">
-      <a class="level-item" :class="item.starred ? 'has-text-warning' : 'has-text-grey-lighter'" @click="itemStarredChange()">
+      <a class="level-item" :class="item.starred ? 'has-text-warning' : 'has-text-grey-lighter'" @click="toggleStarred()">
         <i class="fas fa-star"></i>
       </a>
-      <a class="level-item has-text-danger" @click="itemRemove()">
+      <a class="level-item has-text-danger" @click="deleteItem()">
         <i class="far fa-trash-alt"></i>
       </a>
     </div>
@@ -36,16 +36,14 @@
       }
     },
     methods: {
-      itemActiveChange() {
-        this.item.active = !this.item.active;
-        this.$emit('item-updated', this.item);
+      toggleActive() {
+        this.$store.commit('toggleActive', this.item);
       },
-      itemStarredChange() {
-        this.item.starred = !this.item.starred;
-        this.$emit('item-updated', this.item);
+      toggleStarred() {
+        this.$store.commit('toggleStarred', this.item);
       },
-      itemRemove() {
-        this.$emit('item-remove', this.item);
+      deleteItem() {
+        this.$store.commit('deleteItem', this.item.id);
       }
     }
   };
