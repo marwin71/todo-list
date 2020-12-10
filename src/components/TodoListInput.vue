@@ -1,7 +1,7 @@
 <template>
   <div class="field has-addons">
     <div class="control is-expanded">
-      <input type="text" v-model="title" placeholder="Add a thing to do" @keyup.enter="addItem()" class="input is-rounded is-fullwidth" ref="input" />
+      <input type="text" v-model="title" placeholder="Add a thing or two to do" @keyup.enter="addItem()" class="input is-rounded is-fullwidth" ref="input" />
     </div>
     <div class="control">
       <button @click="addItem()" class="button is-primary is-rounded">
